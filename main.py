@@ -38,11 +38,28 @@ if __name__ == "__main__":
     plt.legend(loc='best')
     ax.set_title("Temperature by Each Month", fontweight="bold")
 
-    ax = plot1.add_subplot(2 ,2, 4)
-    ax.plot(df['Tmax'].loc[df['Month']==7], 'fuchsia', alpha=0.5, label="July")
-    plt.legend(loc='best')
-    ax.set_title("July Temperatures", fontweight="bold")
+    july = df['Tmax'].loc[df['Month']==7]
+    error = np.std(july)
+    mean = np.mean(july)
 
+    df['error_july'] = error
+    df['mean_july'] = mean
+
+
+
+    ax = plot1.add_subplot(2 ,2, 4, sharex=ax)
+    ax.plot(df['Tmax'].loc[df['Month']==7], 'fuchsia', alpha=1, label="July")
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]+1*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.25, label="Threshold (%68.2)")
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]-1*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.25)
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]+2*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.55, label="Threshold (%95.4)")
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]-2*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.55)
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]+3*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.90, label="Threshold (%99.9)")
+    ax.plot(df['mean_july'].loc[df['Month'] == 7]-3*df['error_july'].loc[df['Month'] == 7], 'r-', alpha=0.90)
+    ax.plot(df['mean_july'].loc[df['Month'] == 7], 'g-', alpha=1.0, label="Mean Average")
+
+
+    plt.legend(loc=4)
+    ax.set_title("July Temperatures", fontweight="bold")
 
     # plot2 = plt.figure()
     ax = plot1.add_subplot(2, 2, 3)
@@ -59,5 +76,7 @@ if __name__ == "__main__":
     #     ax.plot(df['Month'].loc[df['Year'] == i ], df['Tmin'].loc[df['Year'] == i], 'b-', alpha=(0.008737864*i-16.62427184), label=i)
     # # plt.legend()
     # ax.set_title("Max Temperature spectrum", fontweight="bold")
+    # #
+    # #
     plt.show()
 
