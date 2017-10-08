@@ -1,5 +1,7 @@
-import numpy as np
 import pandas as pd
+import requests
+from io import StringIO
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -14,23 +16,25 @@ def make_unique(mylist):
 
 if __name__ == "__main__":
 
-    # data_loc = 'Data/Lowestoft_Data.txt'
+    # Get Data from url
+
     data_loc = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/lowestoftdata.txt"
-    df = pd.read_csv(data_loc, skiprows=range(0,6))
-    print(df.iloc[-1:])
+    data_tmp = requests.get(data_loc)
+    df = pd.read_csv(StringIO(data_tmp.text), skiprows=range(0,6))
 
 
-# ## Format dataframe
-#     df['Date'] = pd.to_datetime(dict(year=df.Year, month=df.Month, day='01'))
-#
-#     df.reset_index()
-#     df.index = df['Date']
-#
-#     del df['Date']
-#
-#     years = df['Year'].tolist()
-#     years = make_unique(years)
-#     months = np.linspace(1, 12, 12)
+
+    # Format dataframe
+    df['Date'] = pd.to_datetime(dict(year=df.Year, month=df.Month, day='01'))
+
+    df.reset_index()
+    df.index = df['Date']
+
+    del df['Date']
+
+    years = df['Year'].tolist()
+    years = make_unique(years)
+    months = np.linspace(1, 12, 12)
 
 
 
