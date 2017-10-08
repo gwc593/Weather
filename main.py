@@ -14,10 +14,10 @@ def make_unique(mylist):
 
 if __name__ == "__main__":
 
-    data_loc = 'Data/Lowestoft_Data.txt'
-
-    df = pd.read_csv(data_loc)
-
+    # data_loc = 'Data/Lowestoft_Data.txt'
+    data_loc = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/lowestoftdata.txt"
+    df = pd.read_csv(data_loc, skiprows=range(0,6))
+    print(df.iloc[-1:])
 
 
 # ## Format dataframe
