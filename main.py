@@ -14,7 +14,7 @@ def make_unique(mylist):
 
 if __name__ == "__main__":
 
-    data_loc = 'https://www.metoffice.gov.uk/pub/data/weather/uk/climate/stationdata/lowestoftdata.txt'
+    data_loc = 'Data/Lowestoft_Data.txt'
 
     df = pd.read_csv(data_loc)
 
